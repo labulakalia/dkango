@@ -29,7 +29,6 @@ func (f *openedFile) FindFiles(fillFindDataCallBack func(fi *dokan.WIN32_FIND_DA
 				log.Println("ERROR: FindFiles", err)
 				continue
 			}
-
 			copy(fi.FileName[:], name)
 			if file.IsDir() {
 				fi.FileAttributes = dokan.FILE_ATTRIBUTE_DIRECTORY

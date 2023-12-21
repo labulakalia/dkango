@@ -126,7 +126,12 @@ func unregisterInstance(mi *MountInfo) {
 	}
 }
 
-func MountDisk(mountPoint string, d Disk, optionFlags uint32) (*MountInfo, error) {
+type Option struct {
+	Flag    uint32
+	UncName string
+}
+
+func MountDisk(mountPoint string, d Disk, op *Option) (*MountInfo, error) {
 	mi := &MountInfo{disk: d, openedFiles: map[unsafe.Pointer]struct{}{}}
 	if err := registerInstance(mi); err != nil {
 		return nil, err
@@ -143,7 +148,11 @@ func MountDisk(mountPoint string, d Disk, optionFlags uint32) (*MountInfo, error
 		Version:       DOKAN_MINIMUM_COMPATIBLE_VERSION,
 		GlobalContext: unsafe.Pointer(mi),
 		MountPoint:    unsafe.Pointer(path),
-		Options:       optionFlags,
+		Options:       op.Flag,
+	}
+	uncName, err := UTF16PtrFromString(op.UncName)
+	if err == nil {
+		options.UNCName = unsafe.Pointer(uncName)
 	}
 
 	mi.mounted.Add(1)

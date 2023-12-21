@@ -80,12 +80,12 @@ const (
 //
 // To provide random access, file opened by fsys should implement io.Seeker or ReaderAt and WriterAt.
 // If only sequential access is provided, many applications will not work properly.
-func MountFS(mountPoint string, fsys fs.FS, opt *MountOptions) (*dokan.MountInfo, error) {
-	if opt == nil {
-		opt = &MountOptions{
-			VolumeInfo: dokan.VolumeInformation{Name: "", FileSystemName: "Dokan"},
-			Flags:      dokan.DOKAN_OPTION_ALT_STREAM,
-		}
-	}
-	return dokan.MountDisk(mountPoint, &disk{opt: opt, fsys: fsys}, opt.Flags)
-}
+// func MountFS(mountPoint string, fsys fs.FS, opt *MountOptions) (*dokan.MountInfo, error) {
+// 	if opt == nil {
+// 		opt = &MountOptions{
+// 			VolumeInfo: dokan.VolumeInformation{Name: "", FileSystemName: "Dokan"},
+// 			Flags:      dokan.DOKAN_OPTION_ALT_STREAM,
+// 		}
+// 	}
+// 	return dokan.MountDisk(mountPoint, &disk{opt: opt, fsys: fsys}, opt.Flags)
+// }
